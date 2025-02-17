@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  image     String?   
+  status    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     HiringPost[]
+}
+
+
+model JobType {
+  id        Int       @id @default(autoincrement())
+  name      String
+  image     String
+  status    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     HiringPost[]
+}
+
+model HiringPost {
+  id              Int       @id @default(autoincrement())
+  position        String
+  jobClose        DateTime
+  description     String
+  requirement     String
+  responsibility  String
+  benefit         String
+  status          Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  categoryId      Int
+  jobTypeId       Int
+  category        Category  @relation(fields: [categoryId], references: [id])
+  jobType         JobType   @relation(fields: [jobTypeId], references: [id])
+}
+
+
+
