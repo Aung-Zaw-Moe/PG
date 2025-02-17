@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { JobtypeController } from './jobtype.controller';
-import { JobtypeService } from './jobtype.service';
+import { JobTypeService } from './jobtype.service';
+import { PrismaModule } from 'src/modules/prisma/prisma.module';
+import { JobTypeController } from './jobtype.controller';
 
 @Module({
-  controllers: [JobtypeController],
-  providers: [JobtypeService]
+  imports: [PrismaModule],
+  providers: [JobTypeService],
+  controllers: [JobTypeController],
 })
-export class JobtypeModule {}
+export class JobTypeModule {}

@@ -3,15 +3,16 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CategoryModule } from './modules/careers/category/category.module';
-import { JobtypeModule } from './modules/careers/jobtype/jobtype.module';
-import { HiringpostModule } from './modules/careers/hiringpost/hiringpost.module';
+import { CategoryModule } from 'src/modules/careers/category/category.module';
+import { JobTypeModule } from 'src/modules/careers/jobtype/jobtype.module';
+import { HiringPostModule } from 'src/modules/careers/hiringpost/hiringpost.module';
+import { LocationModule } from 'src/modules/careers/location/location.module';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'public/storage/uploads'),
-    }),CategoryModule, JobtypeModule, HiringpostModule],
+    }),CategoryModule, JobTypeModule, HiringPostModule, LocationModule ],
   controllers: [AppController],
   providers: [AppService],
 })

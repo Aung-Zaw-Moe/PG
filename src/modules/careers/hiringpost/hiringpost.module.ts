@@ -1,9 +1,12 @@
+
 import { Module } from '@nestjs/common';
-import { HiringpostController } from './hiringpost.controller';
-import { HiringpostService } from './hiringpost.service';
+import { HiringPostService } from './hiringpost.service';
+import { HiringPostController } from './hiringpost.controller';
+import { PrismaModule } from 'src/modules/prisma/prisma.module';
 
 @Module({
-  controllers: [HiringpostController],
-  providers: [HiringpostService]
+  imports: [PrismaModule],
+  controllers: [HiringPostController],
+  providers: [HiringPostService],
 })
-export class HiringpostModule {}
+export class HiringPostModule {}

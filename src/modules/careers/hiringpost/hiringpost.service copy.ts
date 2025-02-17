@@ -1,3 +1,4 @@
+
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateHiringPostDto } from './dto/create-hiringpost.dto';
@@ -9,32 +10,17 @@ export class HiringPostService {
 
   async create(data: CreateHiringPostDto) {
     const hiringPost = await this.prisma.hiringPost.create({ data });
-    return {
-      status: true,
-      path: '/api/hiringpost/',
-      statusCode: 201,
-      message: 'Hiring post created successfully',
-      data: hiringPost,
-      timestamp: new Date().toISOString(),
-    };
+    return hiringPost;
   }
 
   async findAll() {
-    const hiringPosts = await this.prisma.hiringPost.findMany({
+    return await this.prisma.hiringPost.findMany({
       include: {
         category: true,
         jobType: true,
         location: true,
       },
     });
-    return {
-      status: true,
-      path: '/api/hiringpost/',
-      statusCode: 200,
-      message: 'Request was successful',
-      data: hiringPosts,
-      timestamp: new Date().toISOString(),
-    };
   }
 
   async findOne(id: number) {
@@ -49,14 +35,7 @@ export class HiringPostService {
     if (!hiringPost) {
       throw new NotFoundException('Hiring post not found.');
     }
-    return {
-      status: true,
-      path: `/api/hiringpost/${id}`,
-      statusCode: 200,
-      message: 'Request was successful',
-      data: hiringPost,
-      timestamp: new Date().toISOString(),
-    };
+    return hiringPost;
   }
 
   async update(id: number, data: UpdateHiringPostDto) {
@@ -64,18 +43,10 @@ export class HiringPostService {
     if (!existingPost) {
       throw new NotFoundException('Hiring post not found.');
     }
-    const updatedPost = await this.prisma.hiringPost.update({
+    return await this.prisma.hiringPost.update({
       where: { id },
       data,
     });
-    return {
-      status: true,
-      path: `/api/hiringpost/${id}`,
-      statusCode: 200,
-      message: 'Hiring post updated successfully',
-      data: updatedPost,
-      timestamp: new Date().toISOString(),
-    };
   }
 
   async remove(id: number) {
@@ -84,12 +55,6 @@ export class HiringPostService {
       throw new NotFoundException('Hiring post not found.');
     }
     await this.prisma.hiringPost.delete({ where: { id } });
-    return {
-      status: true,
-      path: `/api/hiringpost/${id}`,
-      statusCode: 200,
-      message: 'Hiring post deleted successfully',
-      timestamp: new Date().toISOString(),
-    };
+    return { message: 'Hiring post deleted successfully.' };
   }
 }

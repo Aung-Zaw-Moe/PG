@@ -26,13 +26,14 @@ model Category {
 
 model JobType {
   id        Int       @id @default(autoincrement())
-  name      String
-  image     String
+  name      String    @unique
   status    Boolean   @default(true)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   posts     HiringPost[]
 }
+
+
 
 model HiringPost {
   id              Int       @id @default(autoincrement())
@@ -47,9 +48,23 @@ model HiringPost {
   updatedAt       DateTime  @updatedAt
   categoryId      Int
   jobTypeId       Int
+  locationId      Int
   category        Category  @relation(fields: [categoryId], references: [id])
   jobType         JobType   @relation(fields: [jobTypeId], references: [id])
+  location        location  @relation(fields: [locationId], references: [id])
 }
+
+
+
+model location {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  status    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     HiringPost[]
+}
+
 
 
 
