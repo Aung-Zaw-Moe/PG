@@ -34,6 +34,16 @@ model JobType {
 }
 
 
+model Location {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  status    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     HiringPost[]
+}
+
+
 
 model HiringPost {
   id              Int       @id @default(autoincrement())
@@ -51,19 +61,28 @@ model HiringPost {
   locationId      Int
   category        Category  @relation(fields: [categoryId], references: [id])
   jobType         JobType   @relation(fields: [jobTypeId], references: [id])
-  location        location  @relation(fields: [locationId], references: [id])
+  location        Location  @relation(fields: [locationId], references: [id])
+  applications    ApplyNow[]
+
+}
+
+model ApplyNow {
+  id           Int      @id @default(autoincrement())
+  fullName     String
+  email        String
+  cv           String
+  coverLetter  String?
+  // status       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  hiringPostId Int
+  hiringPost   HiringPost @relation(fields: [hiringPostId], references: [id])
 }
 
 
 
-model location {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique
-  status    Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  posts     HiringPost[]
-}
+
+
 
 
 

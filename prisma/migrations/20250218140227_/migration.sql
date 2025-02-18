@@ -23,6 +23,18 @@ CREATE TABLE `JobType` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `Location` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `Location_name_key`(`name`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `HiringPost` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `position` VARCHAR(191) NOT NULL,
@@ -42,14 +54,16 @@ CREATE TABLE `HiringPost` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `location` (
+CREATE TABLE `ApplyNow` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191) NOT NULL,
-    `status` BOOLEAN NOT NULL DEFAULT true,
+    `fullName` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `cv` VARCHAR(191) NOT NULL,
+    `coverLetter` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
+    `hiringPostId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `location_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -60,4 +74,7 @@ ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_categoryId_fkey` FOREIGN KEY
 ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_jobTypeId_fkey` FOREIGN KEY (`jobTypeId`) REFERENCES `JobType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_locationId_fkey` FOREIGN KEY (`locationId`) REFERENCES `location`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_locationId_fkey` FOREIGN KEY (`locationId`) REFERENCES `Location`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplyNow` ADD CONSTRAINT `ApplyNow_hiringPostId_fkey` FOREIGN KEY (`hiringPostId`) REFERENCES `HiringPost`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

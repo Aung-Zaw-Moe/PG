@@ -8,6 +8,14 @@ export class HiringPostService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateHiringPostDto) {
+    // Check if category exists
+    const categoryExists = await this.prisma.category.findUnique({
+      where: { id: data.categoryId },
+    });
+    if (!categoryExists) {
+      throw new NotFoundException(`Category with ID ${data.categoryId} not found.`);
+    }
+    
     const hiringPost = await this.prisma.hiringPost.create({ data });
     return {
       status: true,
@@ -18,6 +26,7 @@ export class HiringPostService {
       timestamp: new Date().toISOString(),
     };
   }
+  
 
   async findAll() {
     const hiringPosts = await this.prisma.hiringPost.findMany({
