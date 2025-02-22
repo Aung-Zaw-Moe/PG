@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateApplyNowDto } from './dto/create-applynow.dto';
 import { UpdateApplyNowDto } from './dto/update-applynow.dto';
 
@@ -8,7 +8,7 @@ export class ApplyNowService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateApplyNowDto) {
-    data.hiringPostId = Number(data.hiringPostId); // Convert to number
+    data.hiringPostId = Number(data.hiringPostId);
     const application = await this.prisma.applyNow.create({ data });
 
     return {
@@ -70,7 +70,7 @@ export class ApplyNowService {
   }
 
   async remove(id: number) {
-    await this.findOne(id); // Check existence
+    await this.findOne(id);
     await this.prisma.applyNow.delete({ where: { id } });
 
     return {

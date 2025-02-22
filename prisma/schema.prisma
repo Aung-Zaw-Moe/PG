@@ -62,8 +62,9 @@ model HiringPost {
   category        Category  @relation(fields: [categoryId], references: [id])
   jobType         JobType   @relation(fields: [jobTypeId], references: [id])
   location        Location  @relation(fields: [locationId], references: [id])
+  regionId        Int
+  region          Region  @relation(fields: [regionId], references: [id])
   applications    ApplyNow[]
-
 }
 
 model ApplyNow {
@@ -80,6 +81,15 @@ model ApplyNow {
 }
 
 
+model Region {
+  id        Int       @id @default(autoincrement())
+  name      String
+  image     String?   
+  status    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     HiringPost[]
+}
 
 
 

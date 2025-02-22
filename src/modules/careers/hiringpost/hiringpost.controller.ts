@@ -27,6 +27,7 @@ export class HiringPostController {
         categoryId: { type: 'number', example: 1 },
         jobTypeId: { type: 'number',  example: 1 },
         locationId: { type: 'number', example: 1 },
+        regionId: { type: 'number', example: 1 }
       },
     },
   })
@@ -65,6 +66,7 @@ export class HiringPostController {
         categoryId: { type: 'number', example: 1 },
         jobTypeId: { type: 'number',  example: 1 },
         locationId: { type: 'number', example: 1 },
+        regionId: { type: 'number', example: 1 }
       },
     },
   })

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateHiringPostDto } from './dto/create-hiringpost.dto';
 import { UpdateHiringPostDto } from './dto/update-hiringpost.dto';
 
@@ -8,6 +8,12 @@ export class HiringPostService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateHiringPostDto) {
+    const regionExists = await this.prisma.region.findUnique({
+      where: { id: data.regionId },
+    });
+    if (!regionExists) {
+      throw new NotFoundException(`Region with ID ${data.regionId} not found.`);
+    }
     // Check if category exists
     const categoryExists = await this.prisma.category.findUnique({
       where: { id: data.categoryId },

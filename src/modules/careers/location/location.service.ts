@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { Request } from 'express';
 

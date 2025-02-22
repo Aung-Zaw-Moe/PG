@@ -42,4 +42,8 @@ export class CreateHiringPostDto {
   @ApiProperty({ example: 1, description: 'Location ID', type: 'number' })
   @IsInt()
   locationId: number;
+  
+  @ApiProperty({ example: 1, description: 'Region ID', type: 'number' })
+  @IsInt()
+  regionId: number; 
 }

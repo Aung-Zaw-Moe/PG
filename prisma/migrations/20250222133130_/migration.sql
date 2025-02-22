@@ -49,6 +49,7 @@ CREATE TABLE `HiringPost` (
     `categoryId` INTEGER NOT NULL,
     `jobTypeId` INTEGER NOT NULL,
     `locationId` INTEGER NOT NULL,
+    `regionId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -67,6 +68,18 @@ CREATE TABLE `ApplyNow` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `Region` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `image` VARCHAR(191) NULL,
+    `status` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -75,6 +88,9 @@ ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_jobTypeId_fkey` FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_locationId_fkey` FOREIGN KEY (`locationId`) REFERENCES `Location`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `HiringPost` ADD CONSTRAINT `HiringPost_regionId_fkey` FOREIGN KEY (`regionId`) REFERENCES `Region`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ApplyNow` ADD CONSTRAINT `ApplyNow_hiringPostId_fkey` FOREIGN KEY (`hiringPostId`) REFERENCES `HiringPost`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
